@@ -4,9 +4,9 @@ namespace Domain.Interfaces;
 
 public interface IProductRepository
 {
-    Task AddProductsAsync(Products product);
-    Task UpdateProductsAsync(Products product);
-    Task DeleteProductsAsync(int id);
+    Task<bool> AddProductsAsync(Products product);
+    Task<bool> UpdateProductsAsync(Products product);
+    Task<bool> DeleteProductsAsync(int id);
     Task<Products> GetProductsAsync(int id);
     Task<List<Products>> GetProductsAsync();
     Task<List<Products>> GetProductsByCategoryAsync(int categoryId);

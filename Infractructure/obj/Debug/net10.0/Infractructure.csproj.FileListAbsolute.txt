@@ -29,3 +29,5 @@ C:\Users\Vali\Desktop\PROJECT\MiniShop.Net\Infractructure\obj\Debug\net10.0\Infr
 C:\Users\Vali\Desktop\PROJECT\MiniShop.Net\Infractructure\obj\Debug\net10.0\refint\Infractructure.dll
 C:\Users\Vali\Desktop\PROJECT\MiniShop.Net\Infractructure\obj\Debug\net10.0\Infractructure.pdb
 C:\Users\Vali\Desktop\PROJECT\MiniShop.Net\Infractructure\obj\Debug\net10.0\ref\Infractructure.dll
+C:\Users\Vali\Desktop\PROJECT\MiniShop.Net\Infractructure\bin\Debug\net10.0\Application.dll
+C:\Users\Vali\Desktop\PROJECT\MiniShop.Net\Infractructure\bin\Debug\net10.0\Application.pdb
