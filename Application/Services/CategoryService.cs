@@ -1,4 +1,5 @@
 using System.Net;
+using Application.DTOs;
 using Application.Interfaces;
 using Application.Responses;
 using Domain.Interfaces;
@@ -10,16 +11,25 @@ public class CategoryService(ICategoryRepository categoryRepository) : ICategory
 {
     private ICategoryRepository repository = categoryRepository;
 
-    public async Task<ApiResponse<bool>> AddCategoryAsync(Category category)
+    public async Task<ApiResponse<bool>> AddCategoryAsync(CreateCategoryDto dto)
     {
+        var category = new Category()
+        {
+            Name = dto.Name
+        };
         var res = await repository.AddCategoryAsync(category);
         return res == true
         ? new ApiResponse<bool>(HttpStatusCode.OK, "Added!", res)
         : new ApiResponse<bool>(HttpStatusCode.InternalServerError, "Not added.", res);
     }
 
-    public async Task<ApiResponse<bool>> UpdateCategoryAsync(Category category)
+    public async Task<ApiResponse<bool>> UpdateCategoryAsync(UpdateCategoryDto dto)
     {
+        var category = new Category()
+        {
+            Id = dto.Id,
+            Name = dto.Name
+        };
         var res = await repository.UpdateCategoryAsync(category);
         return res == true
         ? new ApiResponse<bool>(HttpStatusCode.OK, "Updated!", res)
@@ -34,16 +44,27 @@ public class CategoryService(ICategoryRepository categoryRepository) : ICategory
         : new ApiResponse<bool>(HttpStatusCode.InternalServerError, "Not deleted.", res);
     }
 
-    public async Task<ApiResponse<Category>> GetCategoryAsync(int id)
+    public async Task<ApiResponse<GetCategoryDto>> GetCategoryAsync(int id)
     {
         var res = await repository.GetCategoryAsync(id);
-        return new ApiResponse<Category>(HttpStatusCode.OK, "Category with given id.", res);
+        return res != null
+        ? new ApiResponse<GetCategoryDto>(HttpStatusCode.OK, "Category with given id.", new GetCategoryDto()
+        {
+            Id = res.Id,
+            Name = res.Name
+        })
+        : new ApiResponse<GetCategoryDto>(HttpStatusCode.NotFound, "No category with given id.");
     }
 
-    public async Task<ApiResponse<List<Category>>> GetCategorysAsync()
+    public async Task<ApiResponse<List<GetCategoryDto>>> GetCategorysAsync()
     {
-        var res = await repository.GetCategorysAsync();
-        return new ApiResponse<List<Category>>(HttpStatusCode.OK, "List of categories.", res);
+        var categories = await repository.GetCategorysAsync();
+        var res = categories.Select(v => new GetCategoryDto()
+        {
+            Id = v.Id,
+            Name = v.Name
+        }).ToList();
+        return new ApiResponse<List<GetCategoryDto>>(HttpStatusCode.OK, "List of categories.", res);
     }
 
     public async Task<ApiResponse<int>> GetAmountOfCategorysAsync()

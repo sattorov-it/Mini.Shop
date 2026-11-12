@@ -1,4 +1,5 @@
 using System.Net;
+using Application.DTOs;
 using Application.Interfaces;
 using Application.Responses;
 using Domain.Interfaces;
@@ -10,16 +11,29 @@ public class ProductService(IProductRepository productRepository) : IProductServ
 {
     private IProductRepository repository = productRepository;
 
-    public async Task<ApiResponse<bool>> AddProductsAsync(Products product)
+    public async Task<ApiResponse<bool>> AddProductsAsync(CreateProductDto dto)
     {
+        var product = new Products()
+        {
+            Name = dto.Name,
+            Price = dto.Price,
+            CategoryId = dto.CategoryId
+        };
         var res = await repository.AddProductsAsync(product);
         return res == true
         ? new ApiResponse<bool>(HttpStatusCode.OK, "Added!", res)
         : new ApiResponse<bool>(HttpStatusCode.InternalServerError, "Not added.", res);
     }
 
-    public async Task<ApiResponse<bool>> UpdateProductsAsync(Products product)
+    public async Task<ApiResponse<bool>> UpdateProductsAsync(UpdateProductDto dto)
     {
+        var product = new Products()
+        {
+            Id = dto.Id,
+            Name = dto.Name,
+            Price = dto.Price,
+            CategoryId = dto.CategoryId
+        };
         var res = await repository.UpdateProductsAsync(product);
         return res == true
         ? new ApiResponse<bool>(HttpStatusCode.OK, "Updated!", res)
@@ -34,22 +48,44 @@ public class ProductService(IProductRepository productRepository) : IProductServ
         : new ApiResponse<bool>(HttpStatusCode.InternalServerError, "Not deleted.", res);
     }
 
-    public async Task<ApiResponse<Products>> GetProductsAsync(int id)
+    public async Task<ApiResponse<GetProductDto>> GetProductsAsync(int id)
     {
         var res = await repository.GetProductsAsync(id);
-        return new ApiResponse<Products>(HttpStatusCode.OK, "Product with given id.", res);
+        return res != null
+        ? new ApiResponse<GetProductDto>(HttpStatusCode.OK, "Product with given id.", new GetProductDto()
+        {
+            Id = res.Id,
+            Name = res.Name,
+            Price = res.Price,
+            CategoryId = res.CategoryId
+        })
+        : new ApiResponse<GetProductDto>(HttpStatusCode.NotFound, "No product with given id.");
     }
 
-    public async Task<ApiResponse<List<Products>>> GetProductsAsync()
+    public async Task<ApiResponse<List<GetProductDto>>> GetProductsAsync()
     {
-        var res = await repository.GetProductsAsync();
-        return new ApiResponse<List<Products>>(HttpStatusCode.OK, "List of products.", res);
+        var products = await repository.GetProductsAsync();
+        var res = products.Select(v => new GetProductDto()
+        {
+            Id = v.Id,
+            Name = v.Name,
+            Price = v.Price,
+            CategoryId = v.CategoryId
+        }).ToList();
+        return new ApiResponse<List<GetProductDto>>(HttpStatusCode.OK, "List of products.", res);
     }
 
-    public async Task<ApiResponse<List<Products>>> GetProductsByCategoryAsync(int categoryId)
+    public async Task<ApiResponse<List<GetProductDto>>> GetProductsByCategoryAsync(int categoryId)
     {
-        var res = await repository.GetProductsByCategoryAsync(categoryId);
-        return new ApiResponse<List<Products>>(HttpStatusCode.OK, "List of products by category.", res);
+        var products = await repository.GetProductsByCategoryAsync(categoryId);
+        var res = products.Select(v => new GetProductDto()
+        {
+            Id = v.Id,
+            Name = v.Name,
+            Price = v.Price,
+            CategoryId = v.CategoryId
+        }).ToList();
+        return new ApiResponse<List<GetProductDto>>(HttpStatusCode.OK, "List of products by category.", res);
     }
 
     public async Task<ApiResponse<int>> GetAmountOfProductsAsync()

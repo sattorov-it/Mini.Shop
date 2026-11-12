@@ -1,85 +1,124 @@
+using Application.DTOs;
 using Application.Interfaces;
 using Application.Responses;
-using Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class ProductsController(IProductService productService) : ControllerBase
+public class ProductsController(
+    IProductService productService,
+    ILogger<ProductsController> logger) : ControllerBase
 {
     private IProductService service = productService;
+    private ILogger<ProductsController> _logger = logger;
 
     [HttpGet]
-    public async Task<ApiResponse<List<Products>>> GetProducts()
+    public async Task<ApiResponse<List<GetProductDto>>> GetProducts()
     {
-        return await service.GetProductsAsync();
+        _logger.LogInformation("Request received.");
+        var res = await service.GetProductsAsync();
+        _logger.LogInformation("Response sent.");
+        return res;
     }
 
     [HttpGet("{id:int}")]
-    public async Task<ApiResponse<Products>> GetProduct(int id)
+    public async Task<ApiResponse<GetProductDto>> GetProduct(int id)
     {
-        return await service.GetProductsAsync(id);
+        _logger.LogInformation("Request received.");
+        var res = await service.GetProductsAsync(id);
+        _logger.LogInformation("Response sent.");
+        return res;
     }
 
     [HttpGet("by-category/{categoryId:int}")]
-    public async Task<ApiResponse<List<Products>>> GetProductsByCategory(int categoryId)
+    public async Task<ApiResponse<List<GetProductDto>>> GetProductsByCategory(int categoryId)
     {
-        return await service.GetProductsByCategoryAsync(categoryId);
+        _logger.LogInformation("Request received.");
+        var res = await service.GetProductsByCategoryAsync(categoryId);
+        _logger.LogInformation("Response sent.");
+        return res;
     }
 
     [HttpPost]
-    public async Task<ApiResponse<bool>> AddProduct(Products product)
+    public async Task<ApiResponse<bool>> AddProduct(CreateProductDto dto)
     {
-        return await service.AddProductsAsync(product);
+        _logger.LogInformation("Request received.");
+        var res = await service.AddProductsAsync(dto);
+        _logger.LogInformation("Response sent.");
+        return res;
     }
 
     [HttpPut]
-    public async Task<ApiResponse<bool>> UpdateProduct(Products product)
+    public async Task<ApiResponse<bool>> UpdateProduct(UpdateProductDto dto)
     {
-        return await service.UpdateProductsAsync(product);
+        _logger.LogInformation("Request received.");
+        var res = await service.UpdateProductsAsync(dto);
+        _logger.LogInformation("Response sent.");
+        return res;
     }
 
     [HttpDelete]
     public async Task<ApiResponse<bool>> DeleteProduct(int id)
     {
-        return await service.DeleteProductsAsync(id);
+        _logger.LogInformation("Request received.");
+        var res = await service.DeleteProductsAsync(id);
+        _logger.LogInformation("Response sent.");
+        return res;
     }
 
     [HttpGet("amount")]
     public async Task<ApiResponse<int>> GetAmountOfProducts()
     {
-        return await service.GetAmountOfProductsAsync();
+        _logger.LogInformation("Request received.");
+        var res = await service.GetAmountOfProductsAsync();
+        _logger.LogInformation("Response sent.");
+        return res;
     }
 
     [HttpGet("amount/by-category/{categoryId:int}")]
     public async Task<ApiResponse<int>> GetAmountOfProductsByCategory(int categoryId)
     {
-        return await service.GetAmountOfProductsByCategoryAsync(categoryId);
+        _logger.LogInformation("Request received.");
+        var res = await service.GetAmountOfProductsByCategoryAsync(categoryId);
+        _logger.LogInformation("Response sent.");
+        return res;
     }
 
     [HttpGet("min-price/by-category/{categoryId:int}")]
     public async Task<ApiResponse<decimal>> GetMinPriceByCategory(int categoryId)
     {
-        return await service.GetMinPriceOfProductByCategoryAsync(categoryId);
+        _logger.LogInformation("Request received.");
+        var res = await service.GetMinPriceOfProductByCategoryAsync(categoryId);
+        _logger.LogInformation("Response sent.");
+        return res;
     }
 
     [HttpGet("max-price/by-category/{categoryId:int}")]
     public async Task<ApiResponse<decimal>> GetMaxPriceByCategory(int categoryId)
     {
-        return await service.GetMaxPriceOfProductByCategoryAsync(categoryId);
+        _logger.LogInformation("Request received.");
+        var res = await service.GetMaxPriceOfProductByCategoryAsync(categoryId);
+        _logger.LogInformation("Response sent.");
+        return res;
     }
 
     [HttpGet("average-price/by-category/{categoryId:int}")]
     public async Task<ApiResponse<decimal>> GetAveragePriceByCategory(int categoryId)
     {
-        return await service.GetAveragePriceOfProductByCategoryAsync(categoryId);
+        _logger.LogInformation("Request received.");
+        var res = await service.GetAveragePriceOfProductByCategoryAsync(categoryId);
+        _logger.LogInformation("Response sent.");
+        return res;
     }
 
     [HttpGet("total-price")]
     public async Task<ApiResponse<decimal>> GetTotalPrice()
     {
-        return await service.GetTotalPriceOfProductsAsync();
+        _logger.LogInformation("Request received.");
+        var res = await service.GetTotalPriceOfProductsAsync();
+        _logger.LogInformation("Response sent.");
+        return res;
     }
 }

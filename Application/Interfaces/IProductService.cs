@@ -1,16 +1,15 @@
+using Application.DTOs;
 using Application.Responses;
-using Domain.Models;
-
 namespace Application.Interfaces;
 
 public interface IProductService
 {
-    Task<ApiResponse<bool>> AddProductsAsync(Products product);
-    Task<ApiResponse<bool>> UpdateProductsAsync(Products product);
+    Task<ApiResponse<bool>> AddProductsAsync(CreateProductDto dto);
+    Task<ApiResponse<bool>> UpdateProductsAsync(UpdateProductDto dto);
     Task<ApiResponse<bool>> DeleteProductsAsync(int id);
-    Task<ApiResponse<Products>> GetProductsAsync(int id);
-    Task<ApiResponse<List<Products>>> GetProductsAsync();
-    Task<ApiResponse<List<Products>>> GetProductsByCategoryAsync(int categoryId);
+    Task<ApiResponse<GetProductDto>> GetProductsAsync(int id);
+    Task<ApiResponse<List<GetProductDto>>> GetProductsAsync();
+    Task<ApiResponse<List<GetProductDto>>> GetProductsByCategoryAsync(int categoryId);
     Task<ApiResponse<int>> GetAmountOfProductsAsync();
     Task<ApiResponse<int>> GetAmountOfProductsByCategoryAsync(int categoryId);
     Task<ApiResponse<decimal>> GetMinPriceOfProductByCategoryAsync(int categoryId);
