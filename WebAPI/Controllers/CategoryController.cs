@@ -20,35 +20,30 @@ public class CategoriesController(ICategoryService categoryService) : Controller
     [HttpGet("{id:int}")]
     public async Task<ApiResponse<GetCategoryDto>> GetCategory(int id)
     {
-        var res = await service.GetCategoryAsync(id);
-        return res;
+        return await service.GetCategoryAsync(id);
     }
 
     [HttpPost]
     public async Task<ApiResponse<bool>> AddCategory(CreateCategoryDto dto)
     {
-        var res = await service.AddCategoryAsync(dto);
-        return res;
+        return await service.AddCategoryAsync(dto);
     }
 
     [HttpPut]
     public async Task<ApiResponse<bool>> UpdateCategory(UpdateCategoryDto dto)
     {
-        var res = await service.UpdateCategoryAsync(dto);
-        return res;
+        return await service.UpdateCategoryAsync(dto);
     }
 
     [HttpDelete]
     public async Task<ApiResponse<bool>> DeleteCategory(int id)
     {
-        var res = await service.DeleteCategoryAsync(id);
-        return res;
+        return await service.DeleteCategoryAsync(id);
     }
 
     [HttpGet("amount")]
     public async Task<ApiResponse<int>> GetAmountOfCategorys()
     {
-        var res = await service.GetAmountOfCategorysAsync();
-        return res;
+        return await service.GetAmountOfCategorysAsync();
     }
 }

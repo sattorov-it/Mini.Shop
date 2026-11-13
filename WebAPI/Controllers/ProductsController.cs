@@ -14,84 +14,72 @@ public class ProductsController(IProductService productService) : ControllerBase
     [HttpGet]
     public async Task<ApiResponse<List<GetProductDto>>> GetProducts()
     {
-        var res = await service.GetProductsAsync();
-        return res;
+        return await service.GetProductsAsync();
     }
 
     [HttpGet("{id:int}")]
     public async Task<ApiResponse<GetProductDto>> GetProduct(int id)
     {
-        var res = await service.GetProductsAsync(id);
-        return res;
+        return await service.GetProductsAsync(id);
     }
 
     [HttpGet("by-category/{categoryId:int}")]
     public async Task<ApiResponse<List<GetProductDto>>> GetProductsByCategory(int categoryId)
     {
-        var res = await service.GetProductsByCategoryAsync(categoryId);
-        return res;
+        return await service.GetProductsByCategoryAsync(categoryId);
     }
 
     [HttpPost]
     public async Task<ApiResponse<bool>> AddProduct(CreateProductDto dto)
     {
-        var res = await service.AddProductsAsync(dto);
-        return res;
+        return await service.AddProductsAsync(dto);
     }
 
     [HttpPut]
     public async Task<ApiResponse<bool>> UpdateProduct(UpdateProductDto dto)
     {
-        var res = await service.UpdateProductsAsync(dto);
-        return res;
+        return await service.UpdateProductsAsync(dto);
     }
 
     [HttpDelete]
     public async Task<ApiResponse<bool>> DeleteProduct(int id)
     {
-        var res = await service.DeleteProductsAsync(id);
-        return res;
+        return await service.DeleteProductsAsync(id);
     }
 
     [HttpGet("amount")]
     public async Task<ApiResponse<int>> GetAmountOfProducts()
     {
-        var res = await service.GetAmountOfProductsAsync();
-        return res;
+        return await service.GetAmountOfProductsAsync();
     }
 
     [HttpGet("amount/by-category/{categoryId:int}")]
     public async Task<ApiResponse<int>> GetAmountOfProductsByCategory(int categoryId)
     {
-        var res = await service.GetAmountOfProductsByCategoryAsync(categoryId);
-        return res;
+        return await service.GetAmountOfProductsByCategoryAsync(categoryId);
     }
 
     [HttpGet("min-price/by-category/{categoryId:int}")]
     public async Task<ApiResponse<decimal>> GetMinPriceByCategory(int categoryId)
     {
-        var res = await service.GetMinPriceOfProductByCategoryAsync(categoryId);
-        return res;
+        return await service.GetMinPriceOfProductByCategoryAsync(categoryId);
     }
 
     [HttpGet("max-price/by-category/{categoryId:int}")]
     public async Task<ApiResponse<decimal>> GetMaxPriceByCategory(int categoryId)
     {
-        var res = await service.GetMaxPriceOfProductByCategoryAsync(categoryId);
-        return res;
+        return await service.GetMaxPriceOfProductByCategoryAsync(categoryId);
     }
 
     [HttpGet("average-price/by-category/{categoryId:int}")]
     public async Task<ApiResponse<decimal>> GetAveragePriceByCategory(int categoryId)
     {
-        var res = await service.GetAveragePriceOfProductByCategoryAsync(categoryId);
-        return res;
+        return await service.GetAveragePriceOfProductByCategoryAsync(categoryId);
     }
 
     [HttpGet("total-price")]
     public async Task<ApiResponse<decimal>> GetTotalPrice()
     {
-        var res = await service.GetTotalPriceOfProductsAsync();
-        return res;
+        return await service.GetTotalPriceOfProductsAsync();
     }
 }
