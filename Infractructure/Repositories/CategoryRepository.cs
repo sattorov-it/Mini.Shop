@@ -19,8 +19,10 @@ public class CategoryRepository(ApplicationDbContext appDbContext) : ICategoryRe
     public async Task<bool> DeleteCategoryAsync(int id)
     {
         var category = await _context.Categories.FirstOrDefaultAsync(x => x.Id == id);
-        if (category == null) return false;
-        _context.Categories.Remove(category);
+        if (category != null)
+        {
+            _context.Categories.Remove(category);
+        }
         var res = await _context.SaveChangesAsync();
         return res > 0;
     }
@@ -28,8 +30,10 @@ public class CategoryRepository(ApplicationDbContext appDbContext) : ICategoryRe
     public async Task<bool> UpdateCategoryAsync(Category category)
     {
         var c = await _context.Categories.FirstOrDefaultAsync(x => x.Id == category.Id);
-        if (c == null) return false;
-        c.Name = category.Name;
+        if (c != null)
+        {
+            c.Name = category.Name;
+        }
         var res = await _context.SaveChangesAsync();
         return res > 0;
     }
@@ -37,7 +41,7 @@ public class CategoryRepository(ApplicationDbContext appDbContext) : ICategoryRe
     public async Task<Category> GetCategoryAsync(int id)
     {
         var category = await _context.Categories.FirstOrDefaultAsync(x => x.Id == id);
-        return category!;
+        return category ?? new();
     }
 
     public async Task<List<Category>> GetCategorysAsync()

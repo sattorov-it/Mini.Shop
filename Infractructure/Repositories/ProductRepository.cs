@@ -19,10 +19,12 @@ public class ProductRepository(ApplicationDbContext appDbContext) : IProductRepo
     public async Task<bool> UpdateProductsAsync(Products product)
     {
         var p = await _context.Products.FirstOrDefaultAsync(x => x.Id == product.Id);
-        if (p == null) return false;
-        p.Name = product.Name;
-        p.Price = product.Price;
-        p.CategoryId = product.CategoryId;
+        if (p != null)
+        {
+            p.Name = product.Name;
+            p.Price = product.Price;
+            p.CategoryId = product.CategoryId;
+        }
         var res = await _context.SaveChangesAsync();
         return res > 0;
     }
@@ -30,8 +32,10 @@ public class ProductRepository(ApplicationDbContext appDbContext) : IProductRepo
     public async Task<bool> DeleteProductsAsync(int id)
     {
         var product = await _context.Products.FirstOrDefaultAsync(x => x.Id == id);
-        if (product == null) return false;
-        _context.Products.Remove(product);
+        if (product != null)
+        {
+            _context.Products.Remove(product);
+        }
         var res = await _context.SaveChangesAsync();
         return res > 0;
     }
@@ -39,7 +43,7 @@ public class ProductRepository(ApplicationDbContext appDbContext) : IProductRepo
     public async Task<Products> GetProductsAsync(int id)
     {
         var product = await _context.Products.FirstOrDefaultAsync(x => x.Id == id);
-        return product!;
+        return product ?? new();
     }
 
     public async Task<List<Products>> GetProductsAsync()
