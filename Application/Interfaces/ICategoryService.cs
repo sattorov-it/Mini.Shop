@@ -10,5 +10,4 @@ public interface ICategoryService
     Task<ApiResponse<GetCategoryDto>> GetCategoryAsync(int id);
     Task<ApiResponse<List<GetCategoryDto>>> GetCategorysAsync();
     Task<ApiResponse<int>> GetAmountOfCategorysAsync();
-
 }
